@@ -1,0 +1,3 @@
+1. folder path Zeotap >> open terminal
+2. In Terminal >> code .
+3. 
