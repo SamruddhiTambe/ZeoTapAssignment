@@ -1,3 +1,34 @@
 1. folder path Zeotap >> open terminal
 2. In Terminal >> code .
-3. 
+3. In VS code terminal 
+
+GitHub Setup:
+{
+Initialized empty git repository:
+>> git init	
+
+Connect Local Folder to GitHub:
+>> git remote add origin https://github.com/SamruddhiTambe/ZeoTapAssignment.git
+
+Verify the remote link:
+>> git remote -v
+
+#Add and Commit Your Files
+Add all files to the repository:
+>> git add .
+
+Commit the files with a message:
+>> git commit -m "Initial commit"
+
+#Push to GitHub
+Now, TO push files to GitHub:
+>> git branch -M main
+>> git push -u origin main
+[Enter GitHub username and password or generate a personal access token]
+
+#Enable Auto-Saving Changes (Regular Updates)
+Whenever new changes made, follow this workflow To save changes to GitHub:
+>> git add .
+>> git commit -m "Updated files"
+>> git push origin main
+}
