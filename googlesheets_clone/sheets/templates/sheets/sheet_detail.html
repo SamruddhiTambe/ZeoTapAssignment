@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ sheet.name }}</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+        td[contenteditable="true"] {
+            background-color: #f9f9f9;
+            cursor: pointer;
+        }
+        .toolbar {
+            margin-bottom: 10px;
+        }
+        .bold { font-weight: bold; }
+        .italic { font-style: italic; }
+        .highlight { background-color: yellow; }
+    </style>
+</head>
+<body>
+
+    <h1>{{ sheet.name }}</h1>
+
+    <!-- Toolbar for Formatting -->
+    <div class="toolbar">
+        <button onclick="formatCell('bold')">Bold</button>
+        <button onclick="formatCell('italic')">Italic</button>
+        <button onclick="formatCell('highlight')">Highlight</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Row</th>
+                <th>Column</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cell in cells %}
+            <tr>
+                <td>{{ cell.row.index }}</td>
+                <td>{{ cell.column.name }}</td>
+                <td contenteditable="true" data-cell-id="{{ cell.id }}">{{ cell.value }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        // Save changes to the database when a cell is edited
+        $("td[contenteditable=true]").on("blur", function() {
+            var cellValue = $(this).text();
+            var cellId = $(this).data("cell-id");
+
+            $.ajax({
+                url: "{% url 'update_cell' %}",
+                method: "POST",
+                data: {
+                    cell_id: cellId,
+                    value: cellValue,
+                    csrfmiddlewaretoken: "{{ csrf_token }}"
+                },
+                success: function(response) {
+                    console.log("Updated:", response);
+                }
+            });
+        });
+
+        // Apply Formatting
+        function formatCell(className) {
+            document.activeElement.classList.toggle(className);
+        }
+    </script>
+
+</body>
+</html>

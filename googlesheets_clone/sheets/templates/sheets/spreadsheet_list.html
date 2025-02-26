@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Spreadsheets</title>
+</head>
+<body>
+    <h1>Spreadsheets</h1>
+    <ul>
+        {% for spreadsheet in spreadsheets %}
+            <li><a href="{% url 'sheet_detail' spreadsheet.id %}">{{ spreadsheet.name }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
